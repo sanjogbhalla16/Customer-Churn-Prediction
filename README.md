@@ -22,11 +22,11 @@ A production-ready FastAPI application that combines **Machine Learning** and **
 ## ✨ Features
 
 - **📤 Dataset Upload**: Upload CSV files with flexible target column selection
-- **🧹 Configurable Data Cleaning**: 
+- **🧹 Configurable Data Cleaning**:
   - Multiple missing value strategies (drop, mean, median, mode)
   - Categorical encoding (label encoding, one-hot encoding)
   - Feature scaling (standard scaler, min-max scaler)
-- **🎯 Multi-Model Training**: 
+- **🎯 Multi-Model Training**:
   - Logistic Regression
   - Random Forest Classifier
   - XGBoost Classifier
@@ -103,6 +103,7 @@ pip install -r requirements.txt
 ```
 
 **requirements.txt**:
+
 ```
 fastapi==0.104.1
 uvicorn==0.24.0
@@ -127,6 +128,7 @@ OPENAI_API_KEY=sk-your-actual-openai-api-key-here
 ⚠️ **Important**: Never commit your `.env` file to version control!
 
 Create/update `.gitignore`:
+
 ```
 .env
 venv/
@@ -152,6 +154,7 @@ uvicorn main:app --reload
 ```
 
 You should see:
+
 ```
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 INFO:     Started reloader process
@@ -164,6 +167,7 @@ INFO:     Started reloader process
 ### 🌐 Base URL: `http://localhost:8000`
 
 ### Interactive Documentation
+
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
 
@@ -174,12 +178,14 @@ INFO:     Started reloader process
 Upload your training dataset and specify the target column.
 
 **Request:**
+
 - **Content-Type**: `multipart/form-data`
 - **Parameters**:
   - `file`: CSV file (required)
   - `target_col`: Name of target column, e.g., "Churn" (required)
 
 **Response:**
+
 ```json
 {
   "filename": "customer_data.csv",
@@ -202,6 +208,7 @@ Upload your training dataset and specify the target column.
 ```
 
 **cURL Example:**
+
 ```bash
 curl -X POST "http://localhost:8000/upload" \
   -F "file=@customer_data.csv" \
@@ -215,9 +222,11 @@ curl -X POST "http://localhost:8000/upload" \
 Apply preprocessing transformations to your dataset.
 
 **Request:**
+
 - **Content-Type**: `application/json`
 
 **Request Body:**
+
 ```json
 {
   "missing_value_strategy": "mean",
@@ -227,22 +236,20 @@ Apply preprocessing transformations to your dataset.
 ```
 
 **Options:**
-- `missing_value_strategy`: 
+
+- `missing_value_strategy`:
   - `"drop"` - Remove rows with missing values
   - `"mean"` - Fill numeric columns with mean
-  - `"median"` - Fill numeric columns with median
-  - `"mode"` - Fill all columns with mode
-  
 - `categorical_encoding`:
   - `"label"` - Label encoding (A=0, B=1, C=2)
   - `"onehot"` - One-hot encoding (creates dummy variables)
-  
 - `scaling`:
   - `"standard"` - StandardScaler (mean=0, std=1)
   - `"minmax"` - MinMaxScaler (range 0-1)
   - `"none"` - No scaling
 
 **Response:**
+
 ```json
 {
   "message": "Data cleaning completed",
@@ -261,6 +268,7 @@ Apply preprocessing transformations to your dataset.
 ```
 
 **cURL Example:**
+
 ```bash
 curl -X POST "http://localhost:8000/data_cleaning" \
   -H "Content-Type: application/json" \
@@ -278,9 +286,11 @@ curl -X POST "http://localhost:8000/data_cleaning" \
 Train one or multiple machine learning models.
 
 **Request:**
+
 - **Content-Type**: `application/json`
 
 **Request Body:**
+
 ```json
 {
   "models": ["logistic_regression", "random_forest", "xgboost"],
@@ -289,6 +299,7 @@ Train one or multiple machine learning models.
 ```
 
 **Options:**
+
 - `models`: Array of model names (choose one or more)
   - `"logistic_regression"`
   - `"random_forest"`
@@ -296,6 +307,7 @@ Train one or multiple machine learning models.
 - `test_size`: Fraction for test split (default: 0.2 = 20%)
 
 **Response:**
+
 ```json
 {
   "message": "Models trained successfully",
@@ -305,7 +317,10 @@ Train one or multiple machine learning models.
       "precision": 0.6721,
       "recall": 0.5512,
       "f1_score": 0.6055,
-      "confusion_matrix": [[965, 68], [197, 241]],
+      "confusion_matrix": [
+        [965, 68],
+        [197, 241]
+      ],
       "model_saved": "models/logistic_regression.pkl"
     },
     "random_forest": {
@@ -313,7 +328,10 @@ Train one or multiple machine learning models.
       "precision": 0.6354,
       "recall": 0.4732,
       "f1_score": 0.5423,
-      "confusion_matrix": [[1002, 31], [231, 207]],
+      "confusion_matrix": [
+        [1002, 31],
+        [231, 207]
+      ],
       "model_saved": "models/random_forest.pkl"
     }
   },
@@ -323,6 +341,7 @@ Train one or multiple machine learning models.
 ```
 
 **Metrics Explanation:**
+
 - **Accuracy**: Overall correct predictions
 - **Precision**: Of predicted churns, how many were correct
 - **Recall**: Of actual churns, how many were caught
@@ -330,6 +349,7 @@ Train one or multiple machine learning models.
 - **Confusion Matrix**: `[[TN, FP], [FN, TP]]`
 
 **cURL Example:**
+
 ```bash
 curl -X POST "http://localhost:8000/train_model" \
   -H "Content-Type: application/json" \
@@ -346,12 +366,14 @@ curl -X POST "http://localhost:8000/train_model" \
 Generate predictions on new data with natural language explanations.
 
 **Request:**
+
 - **Content-Type**: `multipart/form-data`
 - **Parameters**:
   - `file`: Test CSV file (required)
   - `model_name`: Model to use for predictions (required)
 
 **Response:**
+
 ```json
 {
   "model_used": "random_forest",
@@ -388,6 +410,7 @@ Generate predictions on new data with natural language explanations.
 ```
 
 **cURL Example:**
+
 ```bash
 curl -X POST "http://localhost:8000/predict" \
   -F "file=@test_customers.csv" \
@@ -489,19 +512,21 @@ with open("test_data.csv", "rb") as f:
 The `/predict` endpoint uses OpenAI's GPT-3.5-turbo to generate human-readable explanations:
 
 **Prompt Template:**
+
 ```
 System: You are a helpful customer analytics assistant.
 
-User: You are a customer analytics expert. Based on the following 
+User: You are a customer analytics expert. Based on the following
 customer data, explain why this customer is [likely/unlikely] to churn.
 
 Customer Data: tenure: 12, MonthlyCharges: 89.5, Contract: Month-to-month
 
-Provide a brief, clear explanation (2-3 sentences) focusing on 
+Provide a brief, clear explanation (2-3 sentences) focusing on
 the key factors that influence this prediction.
 ```
 
 **API Configuration:**
+
 - **Model**: `gpt-3.5-turbo`
 - **Max Tokens**: 150
 - **Temperature**: 0.7
@@ -526,12 +551,14 @@ temperature=0.5  # More focused (0.0-1.0)
 ## 🔒 Security Best Practices
 
 ### Environment Variables
+
 ✅ Store API keys in `.env` file  
 ✅ Never commit `.env` to version control  
 ✅ Use `.gitignore` to exclude sensitive files  
-❌ Never hardcode API keys in source code  
+❌ Never hardcode API keys in source code
 
 ### API Security
+
 - Use HTTPS in production
 - Implement rate limiting
 - Add authentication middleware
@@ -539,6 +566,7 @@ temperature=0.5  # More focused (0.0-1.0)
 - Sanitize user inputs
 
 ### Deployment Checklist
+
 ```bash
 # Before deploying:
 1. Set environment variables on server
@@ -555,59 +583,75 @@ temperature=0.5  # More focused (0.0-1.0)
 ### Common Issues
 
 #### 1. OpenAI API Key Error
+
 ```
 Error: OpenAI API key not configured
 ```
+
 **Solution**: Check your `.env` file exists and contains:
+
 ```
 OPENAI_API_KEY=sk-...
 ```
 
 #### 2. Module Not Found Error
+
 ```
 ModuleNotFoundError: No module named 'fastapi'
 ```
+
 **Solution**: Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 #### 3. Port Already in Use
+
 ```
 ERROR: [Errno 48] Address already in use
 ```
+
 **Solution**: Use a different port:
+
 ```bash
 uvicorn main:app --reload --port 8001
 ```
 
 #### 4. Model Not Found Error
+
 ```
 Model 'random_forest' not found
 ```
+
 **Solution**: Train the model first using `/train_model` endpoint
 
 #### 5. Target Column Not Found
+
 ```
 Target column 'Churn' not found in dataset
 ```
+
 **Solution**: Verify column name in CSV matches exactly (case-sensitive)
 
 ### Debugging Tips
 
 **Enable debug mode:**
+
 ```python
 # In main.py
 app = FastAPI(title="Customer Churn Prediction Platform", debug=True)
 ```
 
 **Check logs:**
+
 ```bash
 # Run with verbose logging
 uvicorn main:app --reload --log-level debug
 ```
 
 **Test individual endpoints:**
+
 ```bash
 # Test server is running
 curl http://localhost:8000/
@@ -628,6 +672,7 @@ curl http://localhost:8000/
 5. **Ensemble Methods**: Combine multiple models
 
 ### Example Enhancement:
+
 ```python
 # Add to /train_model endpoint for better Random Forest
 from sklearn.ensemble import RandomForestClassifier
@@ -652,6 +697,7 @@ This project is open-source and available under the MIT License.
 ## 🤝 Contributing
 
 Contributions are welcome! Please:
+
 1. Fork the repository
 2. Create a feature branch
 3. Commit your changes
@@ -663,6 +709,7 @@ Contributions are welcome! Please:
 ## 📧 Support
 
 For issues, questions, or suggestions:
+
 - Open an issue on GitHub
 - Contact: your-email@example.com
 
