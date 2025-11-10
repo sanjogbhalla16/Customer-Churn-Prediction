@@ -309,7 +309,7 @@ def train_model(config: TrainingConfig):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-@app.post("/predict")
+
 @app.post("/predict")
 async def predict_churn(file: UploadFile = File(...), model_name: str = Form(...)):
     """
