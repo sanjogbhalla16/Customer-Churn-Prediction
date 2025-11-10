@@ -471,16 +471,6 @@ with open("test_data.csv", "rb") as f:
     data = {"model_name": "random_forest"}
     response = requests.post(f"{BASE_URL}/predict", files=files, data=data)
     print(json.dumps(response.json(), indent=2))
-```
-
-### Using Postman
-
-1. Import the API by visiting: `http://localhost:8000/docs`
-2. Click "Try it out" on each endpoint
-3. Upload files and configure parameters
-4. Execute requests and view responses
-
----
 
 ## 🤖 GenAI Integration
 
@@ -550,99 +540,6 @@ temperature=0.5  # More focused (0.0-1.0)
 
 ---
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-#### 1. OpenAI API Key Error
-```
-Error: OpenAI API key not configured
-```
-**Solution**: Check your `.env` file exists and contains:
-```
-OPENAI_API_KEY=sk-...
-```
-
-#### 2. Module Not Found Error
-```
-ModuleNotFoundError: No module named 'fastapi'
-```
-**Solution**: Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-#### 3. Port Already in Use
-```
-ERROR: [Errno 48] Address already in use
-```
-**Solution**: Use a different port:
-```bash
-uvicorn main:app --reload --port 8001
-```
-
-#### 4. Model Not Found Error
-```
-Model 'random_forest' not found
-```
-**Solution**: Train the model first using `/train_model` endpoint
-
-#### 5. Target Column Not Found
-```
-Target column 'Churn' not found in dataset
-```
-**Solution**: Verify column name in CSV matches exactly (case-sensitive)
-
-### Debugging Tips
-
-**Enable debug mode:**
-```python
-# In main.py
-app = FastAPI(title="Customer Churn Prediction Platform", debug=True)
-```
-
-**Check logs:**
-```bash
-# Run with verbose logging
-uvicorn main:app --reload --log-level debug
-```
-
-**Test individual endpoints:**
-```bash
-# Test server is running
-curl http://localhost:8000/
-
-# Expected response: {"message": "Customer Churn Prediction API", "status": "running"}
-```
-
----
-
-## 📊 Model Performance Tips
-
-### Improving Accuracy
-
-1. **Feature Engineering**: Add domain-specific features
-2. **Hyperparameter Tuning**: Use GridSearchCV
-3. **Handle Imbalanced Data**: Use SMOTE or class weights
-4. **Cross-Validation**: Implement k-fold validation
-5. **Ensemble Methods**: Combine multiple models
-
-### Example Enhancement:
-```python
-# Add to /train_model endpoint for better Random Forest
-from sklearn.ensemble import RandomForestClassifier
-
-model = RandomForestClassifier(
-    n_estimators=200,
-    max_depth=10,
-    min_samples_split=5,
-    class_weight='balanced',
-    random_state=42
-)
-```
-
----
-
 ## 📝 License
 
 This project is open-source and available under the MIT License.
@@ -660,24 +557,5 @@ Contributions are welcome! Please:
 
 ---
 
-## 📧 Support
-
-For issues, questions, or suggestions:
-- Open an issue on GitHub
-- Contact: your-email@example.com
-
----
-
-## 🎯 Roadmap
-
-- [ ] Add support for more ML models (SVM, Neural Networks)
-- [ ] Implement real-time predictions via WebSocket
-- [ ] Add data visualization dashboard
-- [ ] Support for other LLM providers (Anthropic Claude, Google Gemini)
-- [ ] Batch prediction with progress tracking
-- [ ] Model version management
-- [ ] A/B testing framework
-
----
-
 **Built with ❤️ using FastAPI, scikit-learn, and OpenAI**
+
