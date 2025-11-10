@@ -293,7 +293,7 @@ Train one or multiple machine learning models.
 
 ```json
 {
-  "models": ["logistic_regression", "random_forest", "xgboost"],
+  "model_name": ["logistic_regression", "random_forest", "xgboost"],
   "test_size": 0.2
 }
 ```
@@ -494,16 +494,6 @@ with open("test_data.csv", "rb") as f:
     data = {"model_name": "random_forest"}
     response = requests.post(f"{BASE_URL}/predict", files=files, data=data)
     print(json.dumps(response.json(), indent=2))
-```
-
-### Using Postman
-
-1. Import the API by visiting: `http://localhost:8000/docs`
-2. Click "Try it out" on each endpoint
-3. Upload files and configure parameters
-4. Execute requests and view responses
-
----
 
 ## 🤖 GenAI Integration
 
@@ -578,6 +568,7 @@ temperature=0.5  # More focused (0.0-1.0)
 
 ---
 
+<<<<<<< HEAD
 ## 🐛 Troubleshooting
 
 ### Common Issues
@@ -688,6 +679,8 @@ model = RandomForestClassifier(
 
 ---
 
+=======
+>>>>>>> 5d123111c074b802a836838f4a0049cfac32d295
 ## 📝 License
 
 This project is open-source and available under the MIT License.
@@ -706,6 +699,7 @@ Contributions are welcome! Please:
 
 ---
 
+<<<<<<< HEAD
 ## 📧 Support
 
 For issues, questions, or suggestions:
@@ -727,4 +721,8 @@ For issues, questions, or suggestions:
 
 ---
 
+=======
+>>>>>>> 5d123111c074b802a836838f4a0049cfac32d295
 **Built with ❤️ using FastAPI, scikit-learn, and OpenAI**
+
+
