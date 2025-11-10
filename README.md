@@ -283,7 +283,7 @@ Train one or multiple machine learning models.
 **Request Body:**
 ```json
 {
-  "models": ["logistic_regression", "random_forest", "xgboost"],
+  "model_name": ["logistic_regression", "random_forest", "xgboost"],
   "test_size": 0.2
 }
 ```
@@ -558,4 +558,5 @@ Contributions are welcome! Please:
 ---
 
 **Built with ❤️ using FastAPI, scikit-learn, and OpenAI**
+
 
